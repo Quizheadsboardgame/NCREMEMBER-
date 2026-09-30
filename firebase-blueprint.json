@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "Task": {
+      "title": "Task",
+      "description": "A to-do task item with category (NC, EX, ME), due date, optional due time, and completion status.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique task document identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the owner user"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title or short description of the task",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed notes or checklist for the task",
+          "maxLength": 2000
+        },
+        "category": {
+          "type": "string",
+          "description": "Task category code",
+          "enum": ["NC", "EX", "ME"]
+        },
+        "dueDate": {
+          "type": "string",
+          "description": "Due date formatted as YYYY-MM-DD",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "hasTime": {
+          "type": "boolean",
+          "description": "Whether an explicit due time is specified"
+        },
+        "dueTime": {
+          "type": "string",
+          "description": "Optional due time formatted as HH:mm",
+          "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "Whether the task is marked completed"
+        },
+        "completedAt": {
+          "type": "string",
+          "description": "ISO timestamp when marked completed, or empty string"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp of creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp of last modification"
+        }
+      },
+      "required": ["id", "userId", "title", "category", "dueDate", "hasTime", "completed", "createdAt", "updatedAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Public profile configuration of the user",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User identifier"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the user",
+          "maxLength": 100
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Profile picture URL",
+          "maxLength": 1000
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when profile was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when profile was last updated"
+        }
+      },
+      "required": ["userId", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/profile": {
+      "schema": "UserProfile",
+      "description": "Stores user profile settings"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Stores the user's tasks with category NC, EX, ME, due date, and due time"
+    }
+  }
+}

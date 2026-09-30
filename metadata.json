@@ -1,0 +1,6 @@
+{
+  "name": "SyncTasks - Cross-Device To-Do List",
+  "description": "Real-time multi-device to-do list with NC, EX, and ME categorization, due dates, and precision due times.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
